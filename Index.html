@@ -3661,6 +3661,12 @@ function handleCoinTap(event) {
 
     event.stopPropagation();
 
+    // Cap at ₦900,000 — no more tapping allowed
+    if (nairaBalance >= 900000) {
+        showToast('Maximum balance of ₦900,000 reached! Withdraw now.', '');
+        return;
+    }
+
     tapCount++;
 
     const area = document.getElementById('tapCoinArea');
@@ -3694,6 +3700,9 @@ function handleCoinTap(event) {
         coinCount++;
 
         nairaBalance += NAIRA_PER_COIN;
+
+        // Enforce cap after earning a coin
+        if (nairaBalance > 900000) nairaBalance = 900000;
 
         showToast('+1 Coin = +N120!', 'success');
 
