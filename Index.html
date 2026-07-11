@@ -3663,7 +3663,7 @@ function handleCoinTap(event) {
 
     // Cap at ₦200,000 — no more tapping allowed
     if (nairaBalance >= 200000) {
-        showToast('Maximum balance of ₦200,000 reached! Withdraw now.', '');
+        showLimitMessage();
         return;
     }
 
@@ -4158,6 +4158,62 @@ function hideContactModal(e) {
 }
 
 
+
+function showLimitMessage() {
+    const existing = document.getElementById('limitPopup');
+    if (existing) existing.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'limitPopup';
+    popup.innerHTML = `
+        <div style="
+            position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+            z-index:99999;
+            background:linear-gradient(135deg,#1a1200,#2e1f00,#1a1200);
+            border:2px solid #ffd700;
+            border-radius:20px;
+            padding:28px 24px;
+            width:88%;
+            max-width:360px;
+            box-shadow:0 0 30px rgba(255,215,0,0.5), 0 0 60px rgba(255,165,0,0.2);
+            text-align:center;
+            animation: limitFadeIn 0.4s ease;
+        ">
+            <div style="font-size:36px;margin-bottom:10px">⚠️</div>
+            <div style="
+                font-size:17px;
+                font-weight:800;
+                color:#ffd700;
+                text-shadow:0 0 10px rgba(255,215,0,0.7);
+                margin-bottom:14px;
+                letter-spacing:0.5px;
+                line-height:1.5;
+            ">You Have Reached Your Limit!</div>
+            <div style="
+                font-size:13px;
+                color:#ffe066;
+                line-height:1.7;
+                opacity:0.92;
+            ">
+                This is because you are using the old promo code <span style="color:#ffd700;font-weight:800">1549</span>.<br><br>
+                To withdraw more than <span style="color:#ffd700;font-weight:800">₦200,000</span>, please upgrade to a new promo code.<br><br>
+                You can either <span style="color:#ffd700;font-weight:700">buy a new promo code</span> to unlock a higher limit or <span style="color:#ffd700;font-weight:700">withdraw your current balance of ₦200,000</span>.
+            </div>
+        </div>
+        <style>
+            @keyframes limitFadeIn {
+                from { opacity:0; transform:translate(-50%,-60%); }
+                to { opacity:1; transform:translate(-50%,-50%); }
+            }
+        </style>
+    `;
+    document.body.appendChild(popup);
+    setTimeout(() => {
+        popup.style.transition = 'opacity 0.5s ease';
+        popup.style.opacity = '0';
+        setTimeout(() => popup.remove(), 500);
+    }, 4000);
+}
 
 function showToast(text, type) {
 
