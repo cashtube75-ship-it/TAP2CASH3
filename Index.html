@@ -3625,13 +3625,13 @@ function updateDashboard() {
 
     document.getElementById('coinCount').textContent = coinCount;
 
-    document.getElementById('nairaCount').textContent = nairaBalance.toFixed(2);
+    document.getElementById('nairaCount').textContent = nairaBalance.toLocaleString('en-NG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
     document.getElementById('balanceAmount').textContent = coinCount;
 
     const nairaVal = document.getElementById('nairaValueDisplay');
 
-    if (nairaVal) nairaVal.textContent = nairaBalance.toFixed(0);
+    if (nairaVal) nairaVal.textContent = nairaBalance.toLocaleString('en-NG', {minimumFractionDigits: 0, maximumFractionDigits: 0});
 
     // Progress bar
 
@@ -3770,7 +3770,7 @@ function showWithdrawScreen() {
 
     document.getElementById('withdrawCoinCount').textContent = coinCount;
 
-    document.getElementById('withdrawNairaCount').textContent = nairaBalance.toFixed(2);
+    document.getElementById('withdrawNairaCount').textContent = nairaBalance.toLocaleString('en-NG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
 }
 
